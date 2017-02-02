@@ -45,14 +45,14 @@
      1 = MealActivity calculates bolus in Pump mode; MCMservice calculates bolus in CL, Safety modes
      2 = MCMservice calculates boluses in all modes
      -->
-    <parameter name="meal_activity_bolus_calculation_mode" value="0" type="int"> </parameter>
+    <parameter name="meal_activity_bolus_calculation_mode" value="2" type="int"> </parameter>
     
     <!--
      Exercise detection mode (sets the exercise button automatically on and off
      0 = none
      1 = ExerciseService
      -->
-    <parameter name="exercise_detection_mode" value="0" type="int"> </parameter>
+    <parameter name="exercise_detection_mode" value="1" type="int"> </parameter>
     
     <parameter name="bolus_redeliver_threshold_units" value="1.0" type="double"> </parameter>
     <parameter name="bolus_notify_threshold_units" value="1.0" type="double"> </parameter>
@@ -66,7 +66,7 @@
     <parameter name="apc_enabled" value="true" type="boolean"> </parameter>
     <parameter name="brm_enabled" value="true" type="boolean"> </parameter>
     
-    <parameter name="tbr_enabled" value="false" type="boolean"> </parameter>
+    <parameter name="tbr_enabled" value="true" type="boolean"> </parameter>
     
     <parameter name="setup_screen_font_size" value="16" type="int"> </parameter>
     <parameter name="mdi_requested_at_startup" value="true" type="boolean"> </parameter>
@@ -74,9 +74,10 @@
     <parameter name="audible_alarms_threshold" value="0" type="int"> </parameter>
     <parameter name="vibrate_alarms" value="true" type="boolean"> </parameter>
     <parameter name="night_screen_enabled" value="false" type="boolean"> </parameter>
-    <parameter name="dwm_address_default" value="https://dwm.med.virginia.edu/staging" type="string"> </parameter>
+    <!--<parameter name="dwm_address_default" value="https://dwm.med.virginia.edu/staging" type="string"> </parameter>
     <parameter name="dwm_address_2" value="https://dias.med.virginia.edu/staging" type="string"> </parameter>
     <parameter name="dwm_address_3" value="https://dwm.med.virginia.edu" type="string"> </parameter>
+-->
     <parameter name="backup_password" value="diabetes" type="string"> </parameter>
     <parameter name="bolus_interceptor_enabled" value="true" type="boolean"> </parameter>
     

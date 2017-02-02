@@ -35,13 +35,25 @@ public class SafetyService extends Service {
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "";
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, tickerText, when);
         CharSequence contentTitle = "Safety Service v1.0";
         CharSequence contentText = "Monitoring Insulin Dosing";
         Intent notificationIntent = new Intent(this, SafetyService.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 		Context context = getApplicationContext();
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+        Notification notification;
+        Notification.Builder builder = new Notification.Builder(this);
+
+        builder.setAutoCancel(false);
+        builder.setWhen(when);
+        builder.setTicker(tickerText);
+        builder.setContentTitle(contentTitle);
+        builder.setContentText(contentText);
+        builder.setSmallIcon(icon);
+        builder.setContentIntent(contentIntent);
+        builder.build();
+
+        notification = builder.getNotification();
         final int SAFETY_ID = 1;
 
         startForeground(SAFETY_ID, notification);

@@ -207,13 +207,24 @@ public class RocheDriver extends Service {
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "";
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, tickerText, when);
         Context context = getApplicationContext();
-        CharSequence contentTitle = "Device Driver";
-        CharSequence contentText = "Roche Pump";
-        Intent notificationIntent = new Intent(this, RocheDriver.class);
+
+		Intent notificationIntent = new Intent(this, RocheDriver.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle("Device Driver");
+		builder.setContentText("Roche Pump");
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
         final int DRVR_ID = 12;
         
         //mNotificationManager.notify(DRVR_ID, notification);

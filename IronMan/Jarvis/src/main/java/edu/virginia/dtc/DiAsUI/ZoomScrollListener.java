@@ -122,7 +122,7 @@ public class ZoomScrollListener implements OnTouchListener, OnLongClickListener{
 				Y2 = event.getY(1);
 				dX = (float) Math.abs(X1 - X2);
 				dY = (float) Math.abs(Y1 - Y2);
-				double dist = FloatMath.sqrt(dX * dX + dY * dY); // current distance between two fingers
+				double dist = Math.sqrt(dX * dX + dY * dY); // current distance between two fingers
 				if (Math.abs(dY) >= Math.abs(dX) && canScaleY){ // indicates mostly vertical pinch movement
 //					main.tracker.trackEvent("Touch", "scale Y", ""+canScaleY, 0);
 					if (main.updatePlotBoundary(plot, 1, (double) (oldUpperBound * Math.exp((olddY - dY) / 500)))){ // sets X-axis time boundary based on change in distance between finger
@@ -150,7 +150,7 @@ public class ZoomScrollListener implements OnTouchListener, OnLongClickListener{
 			dX = (float) (X1 - oldX1);
 			dY = (float) (Y1 - oldY1);
 			dT = event.getEventTime() - oldTime;
-			float dist = FloatMath.sqrt((float)dX * (float)dX + (float)dY * (float)dY); // distance between initial and final positions of finger
+			float dist = (float)Math.sqrt((float)dX * (float)dX + (float)dY * (float)dY); // distance between initial and final positions of finger
 //			Log.d(TAG, "Up,dist=" + dist + ", time="+ dT);
 			if (dist < 9 && dT < 300){ // fake finger click action based on short time and movement of touch
 //				main.tracker.trackEvent("Touch", "close plots", "tap", 0);
@@ -191,7 +191,7 @@ public class ZoomScrollListener implements OnTouchListener, OnLongClickListener{
 				oldRightBound = main.getHighInsulinPlotBounds()[PlotsActivity.RIGHT];
 				break;
 			}
-			oldDist = FloatMath.sqrt((oldY2-oldY1)*(oldY2-oldY1) + (oldX2-oldX1)*(oldX2-oldX1));
+			oldDist = (float)Math.sqrt((oldY2-oldY1)*(oldY2-oldY1) + (oldX2-oldX1)*(oldX2-oldX1));
 			mode = TWOFINGER; // finger movement will scale now
 //			Log.d(TAG, "PointDown("+oldX1 + "," + oldY1 + ")("+oldX2+","+oldY2+") DIST="+oldDist);
 			return true;

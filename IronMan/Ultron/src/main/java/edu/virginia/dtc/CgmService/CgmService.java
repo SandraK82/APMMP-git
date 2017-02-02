@@ -90,13 +90,27 @@ public class CgmService extends Service {
     	int icon = R.drawable.ic_launcher;
     	CharSequence tickerText = "CGM Service v1.0";
     	long when = System.currentTimeMillis();
-    	Notification notification = new Notification(icon, tickerText, when);
+
     	Context context = getApplicationContext();
     	CharSequence contentTitle = "CGM Service v1.0";
     	CharSequence contentText = "CGM";
     	Intent notificationIntent = new Intent(this, CgmService.class);
     	PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-    	notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+        Notification notification;
+        Notification.Builder builder = new Notification.Builder(this);
+
+        builder.setAutoCancel(false);
+        builder.setWhen(when);
+        builder.setTicker(tickerText);
+        builder.setContentTitle(contentTitle);
+        builder.setContentText(contentText);
+        builder.setSmallIcon(icon);
+        builder.setContentIntent(contentIntent);
+        builder.build();
+
+        notification = builder.getNotification();
+
     	final int CGM_ID = 1;
     	
     	// Make this a Foreground Service

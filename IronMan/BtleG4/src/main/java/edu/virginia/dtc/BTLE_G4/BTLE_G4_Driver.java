@@ -202,17 +202,28 @@ public class BTLE_G4_Driver extends Service {
 
 		// Set up a Notification for this Service
 		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+
 		int icon = R.drawable.ic_launcher;
 		CharSequence tickerText = "";
 		long when = System.currentTimeMillis();
-		Notification notification = new Notification(icon, tickerText, when);
+
 		Context context = getApplicationContext();
-		CharSequence contentTitle = "Dexcom Local Driver";
-		CharSequence contentText = "USBDexcomLocal";
 		Intent notificationIntent = new Intent(this, BTLE_G4_Driver.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle("Dexcom Local Driver");
+		builder.setContentText("USBDexcomLocal");
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
 		final int DRVR_ID = 1;
 		//mNotificationManager.notify(DRVR_ID, notification);
 		startForeground(DRVR_ID, notification);

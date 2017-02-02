@@ -981,13 +981,25 @@ public class networkService extends Service {
 		int icon = R.drawable.ic_launcher;
 		CharSequence tickerText = "";
 		long when = System.currentTimeMillis();
-		Notification notification = new Notification(icon, tickerText, when);
 		Context context = getApplicationContext();
 		CharSequence contentTitle = "NetworkService v1.0";
 		CharSequence contentText = "Remote Monitoring";
 		Intent notificationIntent = new Intent(this, networkService.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle(contentTitle);
+		builder.setContentText(contentText);
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
 		final int NETWORKSERVICE_ID = 14;
 //		mNotificationManager.notify(NETWORKSERVICE_ID, notification);
 		// Make this a Foreground Service

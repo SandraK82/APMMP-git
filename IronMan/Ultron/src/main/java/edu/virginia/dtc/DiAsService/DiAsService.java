@@ -904,14 +904,26 @@ public class DiAsService extends Service
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "";
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, tickerText, when);
         Context context = getApplicationContext();
         CharSequence contentTitle = "DiAs v1.0";
         CharSequence contentText = "Diabetes Assistant";
         Intent notificationIntent = new Intent(this, DiAsService.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-        final int DIAS_ID = 5;
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle(contentTitle);
+		builder.setContentText(contentText);
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
+		final int DIAS_ID = 5;
 
         // Make this a Foreground Service
         startForeground(DIAS_ID, notification);

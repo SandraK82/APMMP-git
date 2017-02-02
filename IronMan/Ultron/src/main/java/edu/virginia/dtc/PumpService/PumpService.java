@@ -256,14 +256,26 @@ public class PumpService extends Service
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "Pump Service v"+VERSION_NUMBER;
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, tickerText, when);
         Context context = getApplicationContext();
         CharSequence contentTitle = "Pump Service v"+VERSION_NUMBER;
         CharSequence contentText = "Insulin Delivery";
         Intent notificationIntent = new Intent(this, PumpService.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-        final int PUMP_ID = 1;
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle(contentTitle);
+		builder.setContentText(contentText);
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
+		final int PUMP_ID = 1;
 //        mNotificationManager.notify(PUMP_ID, notification);
         
         // Make this a Foreground Service

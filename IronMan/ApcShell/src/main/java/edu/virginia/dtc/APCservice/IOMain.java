@@ -43,13 +43,23 @@ public class IOMain extends Service {
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "";
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, tickerText, when);
-        Context context = getApplicationContext();
-        CharSequence contentTitle = "APCservice";
-        CharSequence contentText = "Mitigating Hyperglycemia";
+
+        Notification notification;
+        Notification.Builder builder = new Notification.Builder(this);
+
         Intent notificationIntent = new Intent(this, IOMain.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+        builder.setAutoCancel(false);
+        builder.setTicker(tickerText);
+        builder.setContentTitle("APCservice");
+        builder.setContentText("Mitigating Hyperglycemia");
+        builder.setSmallIcon(icon);
+        builder.setContentIntent(contentIntent);
+        builder.build();
+
+        notification = builder.getNotification();
+
         final int APC_ID = 3;
 
         // Make this a Foreground Service

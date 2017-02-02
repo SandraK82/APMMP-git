@@ -530,13 +530,25 @@ public class BTLE_Tandem_Driver extends Service{
 		int icon = R.drawable.ic_launcher;
 		CharSequence tickerText = "";
 		long when = System.currentTimeMillis();
-		Notification notification = new Notification(icon, tickerText, when);
+
 		Context context = getApplicationContext();
-		CharSequence contentTitle = "Tandem Driver";
-		CharSequence contentText = "BTLE Pump";
+
 		Intent notificationIntent = new Intent(this, BTLE_Tandem_Driver.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle("Tandem Driver");
+		builder.setContentText("BTLE Pump");
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
 		final int DRVR_ID = 94;
 		startForeground(DRVR_ID, notification);
 		

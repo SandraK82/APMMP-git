@@ -173,13 +173,25 @@ public class BTLE_G4_Driver extends Service
 		int icon = R.drawable.ic_launcher;
 		CharSequence tickerText = "";
 		long when = System.currentTimeMillis();
-		Notification notification = new Notification(icon, tickerText, when);
+
 		Context context = getApplicationContext();
-		CharSequence contentTitle = "Dexcom Share Driver";
-		CharSequence contentText = "BTLE";
+
 		Intent notificationIntent = new Intent(this, BTLE_G4_Driver.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		Notification notification;
+		Notification.Builder builder = new Notification.Builder(this);
+
+		builder.setAutoCancel(false);
+		builder.setWhen(when);
+		builder.setTicker(tickerText);
+		builder.setContentTitle("Dexcom Share Driver");
+		builder.setContentText("BTLE");
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.build();
+
+		notification = builder.getNotification();
 		final int DRVR_ID = 94;
 		startForeground(DRVR_ID, notification);
 		
