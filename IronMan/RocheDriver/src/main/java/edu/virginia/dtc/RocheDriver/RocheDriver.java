@@ -28,6 +28,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -121,11 +122,28 @@ public class RocheDriver extends Service {
 			
 			if(action.equals(BluetoothDevice.ACTION_ACL_CONNECTED))
 			{
-				if(intent.getStringExtra("address") != null)
+				//if(intent.getStringExtra("address") != null)
 				{
-					Debug.w(TAG,  FUNC_TAG, "Awesome, this is our custom intent!");	
-					
-					address = intent.getStringExtra("address");
+					Debug.w(TAG,  FUNC_TAG, "Awesome, this is our custom intent!");
+
+					BluetoothDevice bd = null;
+					for(String k: intent.getExtras().keySet())
+					{
+						Log.i("Intent","found key: "+k);
+						if(k.equals(BluetoothDevice.EXTRA_DEVICE))
+						{
+							if(intent.getStringExtra("address")== null)
+							{
+								bd = ((BluetoothDevice)intent.getExtras().get(k));
+								intent.getExtras().putString("address",bd.getAddress());
+								address=bd.getAddress();
+								Log.i("intent","put device "+bd);
+
+							}
+						}
+					}
+					//address = intent.getStringExtra("address");
+
 					OrgId = address.substring(0, 8);
 					
 					if(OrgId.equals("00:0E:2F"))
@@ -271,6 +289,12 @@ public class RocheDriver extends Service {
 		}
 		else
 			Debug.i(TAG, FUNC_TAG, "Logcat to SD is disabled!");
+
+		Message m = new Message();
+		m.what = Pump.PUMP_SERVICE2DRIVER_REGISTER;
+
+		
+		new incomingPumpHandler().handleMessage(m);
 	}
 	
 	private void startLogThread()
